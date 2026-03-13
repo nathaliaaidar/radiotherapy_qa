@@ -16,19 +16,19 @@ def run_outlier_analysis(csv_path: str, output_dir: str):
     df = pd.read_csv(csv_path)
 
     # --- Outlier flags ---
-    df['DoseRatio'] = df['MaxDose'] / df['PrescribedDose']
-    df['MaxDose_Outlier'] = df['DoseRatio'] > 1.5
-    df['PrescribedDose_Outlier'] = df['PrescribedDose'] < 1.0
+    df[''] = df[''] / df['']
+    df[''] = df[''] > 1.5
+    df['r'] = df[''] < 1.0
 
     zero_cols = [c for c in ['variables'] if c in df.columns]
     if zero_cols:
         df['Zero_Modulation'] = df[zero_cols].eq(0).all(axis=1)
 
-    if 'Field_X_1' in df.columns and 'Field_Y_1' in df.columns:
-        df['Large_Field'] = (df['Field_X_1'] > 20) | (df['Field_Y_1'] > 20)
+    if 'variables' in df.columns and 'variables' in df.columns:
+        df['variables'] = (df['variables'] > 20) | (df['Field_Y_1'] > 20)
 
     # --- Per-patient stats ---
-    agg_cols = {c: ['mean', 'std'] for c in ['MCS', 'SAS_5mm', 'MaxDose', 'PrescribedDose'] if c in df.columns}
+    agg_cols = {c: ['variables'] for c in ['variables'] if c in df.columns}
     stats = df.groupby('PatientID').agg(agg_cols).round(3).reset_index()
     stats.columns = ['_'.join(c).strip('_') for c in stats.columns]
 
@@ -38,20 +38,18 @@ def run_outlier_analysis(csv_path: str, output_dir: str):
 
     # --- Plot: PrescribedDose vs MaxDose ---
     plt.figure(figsize=(8, 6))
-    colors = df['MaxDose_Outlier'].map({True: 'red', False: 'steelblue'})
-    plt.scatter(df['PrescribedDose'], df['MaxDose'], c=colors, alpha=0.6)
-    plt.xlabel('Prescribed Dose (Gy)')
-    plt.ylabel('Max Dose (Gy)')
-    plt.title('Prescribed vs Max Dose  (red = outlier > 150%)')
+    colors = df['r'].map({True: 'red', False: 'steelblue'})
+    plt.scatter(df[''], df['e'], c=colors, alpha=0.6)
+    plt.xlabel(' (Gy)')
+    plt.ylabel('')
+    plt.title('')
     plt.grid(True)
     plt.tight_layout()
-    plt.savefig(os.path.join(output_dir, 'prescribed_vs_maxdose.png'), dpi=150)
+    plt.savefig(os.path.join(output_dir, ), dpi=150)
     plt.close()
 
     # --- Summary ---
     print("\n── Outlier Summary ──────────────────────────")
-    print(f"MaxDose > 150% of Prescribed : {df['MaxDose_Outlier'].sum()} cases")
-    print(f"PrescribedDose < 1 Gy        : {df['PrescribedDose_Outlier'].sum()} cases")
     if 'Zero_Modulation' in df.columns:
         print(f"Zero modulation metrics      : {df['Zero_Modulation'].sum()} cases")
     if 'Large_Field' in df.columns:
