@@ -22,9 +22,7 @@ def extract_dose(file_path: str) -> dict | None:
 
         return {
             'FilePath': file_path,
-            'PatientID': getattr(ds, 'PatientID', 'N/A'),
             'DoseUnits': getattr(ds, 'DoseUnits', 'N/A'),
-            'DoseSummationType': getattr(ds, 'DoseSummationType', 'N/A'),
             'Rows': ds.Rows,
             'Columns': ds.Columns,
             'DoseMin_Gy': float(np.min(dose)),
