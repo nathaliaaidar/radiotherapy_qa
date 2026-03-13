@@ -19,16 +19,7 @@ def extract_dose(file_path: str) -> dict | None:
             return None
 
         dose = ds.pixel_array.astype(np.float32) * float(ds.DoseGridScaling)
-
-        return {
-            'FilePath': file_path,
-            'DoseUnits': getattr(ds, 'DoseUnits', 'N/A'),
-            'Rows': ds.Rows,
-            'Columns': ds.Columns,
-            'DoseMin_Gy': float(np.min(dose)),
-            'DoseMax_Gy': float(np.max(dose)),
-            'DoseMean_Gy': float(np.mean(dose)),
-        }
+      
     except Exception as e:
         print(f"Error reading {file_path}: {e}")
         return None
@@ -40,7 +31,7 @@ def process_folder(root_dir: str, output_csv: str):
         info = extract_dose(str(dcm_file))
         if info:
             results.append(info)
-            print(f"✔ {dcm_file.parent.name} — Max: {info['DoseMax_Gy']:.4f} Gy")
+            print(f"✔ {dcm_file.parent.name} — Max: {info['']:.4f} Gy")
 
     if results:
         df = pd.DataFrame(results)
@@ -51,8 +42,4 @@ def process_folder(root_dir: str, output_csv: str):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Extract dose statistics from RTDOSE DICOM files")
-    parser.add_argument("--dir", required=True, help="Root directory to search recursively")
-    parser.add_argument("--output", default="./dose_summary.csv", help="Output CSV path")
-    args = parser.parse_args()
-    process_folder(args.dir, args.output)
+   
