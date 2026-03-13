@@ -31,7 +31,7 @@ def run_analysis(csv_path: str, output_dir: str):
 
     stats_path = os.path.join(output_dir, 'descriptive_stats.txt')
     with open(stats_path, 'w') as f:
-        f.write("Descriptive Analysis — Radiotherapy Plan Metrics\n\n")
+        f.write("")
         f.write(stats.to_string())
     print(f"Stats saved: {stats_path}")
 
@@ -79,8 +79,4 @@ def run_analysis(csv_path: str, output_dir: str):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Exploratory analysis of DICOM plan metrics")
-    parser.add_argument("--csv", required=True, help="Path to the metrics CSV file")
-    parser.add_argument("--output", default="./output", help="Output directory for plots and stats")
-    args = parser.parse_args()
-    run_analysis(args.csv, args.output)
+    
