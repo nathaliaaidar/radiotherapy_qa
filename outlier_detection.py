@@ -20,7 +20,7 @@ def run_outlier_analysis(csv_path: str, output_dir: str):
     df['MaxDose_Outlier'] = df['DoseRatio'] > 1.5
     df['PrescribedDose_Outlier'] = df['PrescribedDose'] < 1.0
 
-    zero_cols = [c for c in ['MI_s_2', 'MI_s_1', 'MI_a_2', 'MI_a_1'] if c in df.columns]
+    zero_cols = [c for c in ['variables'] if c in df.columns]
     if zero_cols:
         df['Zero_Modulation'] = df[zero_cols].eq(0).all(axis=1)
 
