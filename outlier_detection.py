@@ -22,10 +22,10 @@ def run_outlier_analysis(csv_path: str, output_dir: str):
 
     zero_cols = [c for c in ['variables'] if c in df.columns]
     if zero_cols:
-        df['Zero_Modulation'] = df[zero_cols].eq(0).all(axis=1)
+        df[''] = df[zero_cols].eq(0).all(axis=1)
 
     if 'variables' in df.columns and 'variables' in df.columns:
-        df['variables'] = (df['variables'] > 20) | (df['Field_Y_1'] > 20)
+        df['variables'] = (df['variables'] > 20) | (df[''] > 20)
 
     # --- Per-patient stats ---
     agg_cols = {c: ['variables'] for c in ['variables'] if c in df.columns}
@@ -57,8 +57,4 @@ def run_outlier_analysis(csv_path: str, output_dir: str):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Outlier detection for radiotherapy plan metrics")
-    parser.add_argument("--csv", required=True, help="Path to the metrics CSV file")
-    parser.add_argument("--output", default="./output", help="Output directory")
-    args = parser.parse_args()
-    run_outlier_analysis(args.csv, args.output)
+   
