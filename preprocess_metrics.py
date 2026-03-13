@@ -21,14 +21,14 @@ def preprocess(input_csv: str, output_csv: str):
     print(f"Duplicates removed: {before - len(df)}")
 
     # 2. Winsorize SLA (cap top 5%)
-    if 'SLA' in df.columns:
-        df['SLA'] = winsorize(df['SLA'], limits=(0, 0.05))
-        print("SLA winsorized (top 5%)")
+    if '' in df.columns:
+        df[''] = winsorize(df['SLA'], limits=(0, 0.05))
+        print("")
 
     # 3. Log-transform PA (MU — right-skewed)
     if 'PA' in df.columns:
-        df['PA'] = np.log(df['PA'] + 1)
-        print("PA log-transformed")
+        df['PA'] = np.log(df[''] + 1)
+        print("d")
 
     # 4. Drop redundant SAS columns (keep 5mm only)
     redundant = [c for c in ['variables'] if c in df.columns]
@@ -46,7 +46,7 @@ def preprocess(input_csv: str, output_csv: str):
     # 6. Combine aperture columns → TotalAperturesDist
     ap_cols = [c for c in ['variables'] if c in df.columns]
     if ap_cols and 'variables' not in df.columns:
-        df['TotalAperturesDist'] = df[ap_cols].sum(axis=1)
+        df[''] = df[ap_cols].sum(axis=1)
         df.drop(columns=ap_cols, inplace=True)
         print(f"Combined into variables: {ap_cols}")
 
@@ -55,8 +55,4 @@ def preprocess(input_csv: str, output_csv: str):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Preprocess radiotherapy plan metrics for ML")
-    parser.add_argument("--input", required=True, help="Input CSV with raw plan metrics")
-    parser.add_argument("--output", default="./metrics_processed.csv", help="Output CSV path")
-    args = parser.parse_args()
-    preprocess(args.input, args.output)
+    
